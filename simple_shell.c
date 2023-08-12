@@ -42,7 +42,7 @@ int simple_shell(void)
 		else
 		{
 			if (execl(buf, buf, NULL) == -1)
-				printf("Error executing command\n");
+				perror("./shell");
 		}
 	}
 	free(buf);
