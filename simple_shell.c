@@ -24,6 +24,7 @@ int simple_shell(void)
 			free(buf);
 			return (1);
 		}
+		char *args[] = {buf, NULL};
 
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
@@ -38,7 +39,7 @@ int simple_shell(void)
 		}
 		else
 		{
-			if (execl(buf, buf, NULL) == -1)
+			if (execve(buf, args, NULL) == -1)
 				perror("./shell");
 		}
 	}
