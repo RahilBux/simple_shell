@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * simple_shell - creates a simple shell
+ *
+ * Return: 0 if success else 1
+ */
+
 int simple_shell(void)
 {
 	pid_t pid;
@@ -26,7 +32,6 @@ int simple_shell(void)
 
 		if (pid < 0)
 			perror("./shell");
-		
 		if (pid != 0)
 		{
 			wait(&status);
