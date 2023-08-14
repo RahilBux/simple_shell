@@ -26,6 +26,7 @@ char **tok(char *ptr)
 
 /**
  * simple_shell - creates a simple shell environment
+ * @env: Environment to pass to execve
  *
  * Return: 0(Success) else 1 on failure
  */
