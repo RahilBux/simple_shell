@@ -50,7 +50,6 @@ int simple_shell(char **env)
 			free(buf);
 			exit(EXIT_FAILURE);
 		}
-
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
 		pid = fork();
@@ -62,7 +61,7 @@ int simple_shell(char **env)
 		else if (pid == 0)
 		{
 			args = tok(buf);
-			if (execve(args[0], args, env) == -1)
+			if (execvp(args[0], args) == -1)
 			{
 				perror("execve");
 				exit(EXIT_FAILURE);
