@@ -1,6 +1,21 @@
 #include "shell.h"
 
 /**
+ * printenv - prints the current environment
+ * @env: the environment to print
+ */
+
+void printenv(char **env)
+{
+	int i;
+
+	for (i = 0; env[i] != NULL; i++)
+	{
+		printf("%s\n", env[i]);
+	}
+}
+
+/**
  * tok - creates tokens from a passed string
  * @ptr: string to be passed
  *
@@ -44,14 +59,15 @@ int simple_shell(char **env)
 	{
 		printf("$ ");
 		read = getline(&buf, &inp_len, stdin);
-		if (read == -1)
-		{
-			perror("getline");
-			free(buf);
-			exit(EXIT_FAILURE);
-		}
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
+		if (strcmp(buf, "exit") == 0)
+			break;
+		if (strcmp(buf, "env") == 0)
+		{
+			printenv(env);
+			continue;
+		}
 		pid = fork();
 		if (pid < 0)
 		{

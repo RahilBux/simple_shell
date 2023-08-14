@@ -10,5 +10,6 @@
 
 int simple_shell(char **env);
 char **tok(char *ptr);
+void printenv(char **env);
 
 #endif
