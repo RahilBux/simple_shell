@@ -20,11 +20,10 @@ int simple_shell(void)
 		read = getline(&buf, &inp_len, stdin);
 		if (read == -1)
 		{
-			perror("./shell");
+			perror("getline");
 			free(buf);
-			return (1);
+			exit(EXIT_FAILURE);
 		}
-		char *args[] = {buf, NULL};
 
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
@@ -32,18 +31,36 @@ int simple_shell(void)
 		pid = fork();
 
 		if (pid < 0)
-			perror("./shell");
-		if (pid != 0)
 		{
-			wait(&status);
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
+		{
+			char *token;
+			char *args[1024];
+			int argc = 0;
+
+			token = strtok(buf, " ");
+			while (token != NULL)
+			{
+				args[argc] = token;
+				token = strtok(NULL, " ");
+				argc++;
+			}
+			args[argc] = NULL;
+	
+			if (execve(args[0], args, NULL) == -1)
+			{
+				perror("execve");
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{
-			if (execve(buf, args, NULL) == -1)
-				perror("./shell");
+			wait(&status);
 		}
 	}
 	free(buf);
 	return (0);
 }
-
