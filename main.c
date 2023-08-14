@@ -1,8 +1,8 @@
 #include "shell.h"
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
-	simple_shell();
+	simple_shell(env);
 
 
 	return (0);

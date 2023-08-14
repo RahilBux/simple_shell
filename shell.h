@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-int simple_shell(void);
+int simple_shell(char **env);
+char **tok(char *ptr);
 
 #endif

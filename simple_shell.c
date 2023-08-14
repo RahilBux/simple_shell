@@ -1,18 +1,43 @@
 #include "shell.h"
 
 /**
- * simple_shell - creates a simple shell
+ * tok - creates tokens from a passed string
+ * @ptr: string to be passed
  *
- * Return: 0 if success else 1
+ * Return: array of strings
  */
 
-int simple_shell(void)
+char **tok(char *ptr)
+{
+	char **args;
+	char *token;
+	int argc = 0;
+
+	token = strtok(ptr, " ");
+	while (token != NULL)
+	{
+		args[argc] = token;
+		token = strtok(NULL, " ");
+		argc++;
+	}
+	args[argc] = NULL;
+	return (args);
+}
+
+/**
+ * simple_shell - creates a simple shell environment
+ *
+ * Return: 0(Success) else 1 on failure
+ */
+
+int simple_shell(char **env)
 {
 	pid_t pid;
 	size_t inp_len = 0;
 	ssize_t read;
 	char *buf = NULL;
 	int status;
+	char **args;
 
 	while (1)
 	{
@@ -27,9 +52,7 @@ int simple_shell(void)
 
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
-
 		pid = fork();
-
 		if (pid < 0)
 		{
 			perror("fork");
@@ -37,29 +60,15 @@ int simple_shell(void)
 		}
 		else if (pid == 0)
 		{
-			char *token;
-			char *args[1024];
-			int argc = 0;
-
-			token = strtok(buf, " ");
-			while (token != NULL)
-			{
-				args[argc] = token;
-				token = strtok(NULL, " ");
-				argc++;
-			}
-			args[argc] = NULL;
-	
-			if (execve(args[0], args, NULL) == -1)
+			args = tok(buf);
+			if (execve(args[0], args, env) == -1)
 			{
 				perror("execve");
 				exit(EXIT_FAILURE);
 			}
 		}
 		else
-		{
 			wait(&status);
-		}
 	}
 	free(buf);
 	return (0);
