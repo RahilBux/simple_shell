@@ -1,6 +1,17 @@
 #include "shell.h"
 
 /**
+ * printbash - prints ($) to stdout using the write function
+ */
+
+void printbash(void)
+{
+	char *str = "($) ";
+
+	write(1, str, 4);
+}
+
+/**
  * printenv - prints the current environment
  * @env: the environment to print
  */
@@ -11,7 +22,7 @@ void printenv(char **env)
 
 	for (i = 0; env[i] != NULL; i++)
 	{
-		printf("%s\n", env[i]);
+		write(1, env[i], 1024);
 	}
 }
 
@@ -56,7 +67,7 @@ int simple_shell(char **env)
 
 	while (1)
 	{
-		printf("($) ");
+		printbash();
 		read = getline(&buf, &inp_len, stdin);
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';

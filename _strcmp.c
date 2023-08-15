@@ -23,3 +23,7 @@ int _strcmp(char *str1, char *str2)
 
 	return (cmp);
 }
+
+/**
+ * _strlen - gets the length of a string
+ * @str: string to be cheked
