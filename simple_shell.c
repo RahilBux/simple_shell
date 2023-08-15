@@ -19,10 +19,14 @@ void printbash(void)
 void printenv(char **env)
 {
 	int i;
+	int j;
+	char *newline = "\n";
 
 	for (i = 0; env[i] != NULL; i++)
 	{
-		write(1, env[i], 1024);
+		j = _strlen(env[i]);
+		write(1, env[i], j);
+		write(1, newline, 2);
 	}
 }
 

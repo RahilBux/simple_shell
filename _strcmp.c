@@ -26,4 +26,16 @@ int _strcmp(char *str1, char *str2)
 
 /**
  * _strlen - gets the length of a string
- * @str: string to be cheked
+ * @str: string to be checked
+ *
+ * Return: the length of the string
+ */
+
+int _strlen(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}

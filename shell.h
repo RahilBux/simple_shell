@@ -13,5 +13,6 @@ char **tok(char *ptr);
 void printenv(char **env);
 int _strcmp(char *str1, char *str2);
 void printbash(void);
+int _strlen(char *str);
 
 #endif
