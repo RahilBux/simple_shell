@@ -24,7 +24,7 @@ void printenv(char **env)
 
 char **tok(char *ptr)
 {
-	char **args;
+	char **args = malloc(sizeof(char *) * 10);
 	char *token;
 	int argc = 0;
 
@@ -43,7 +43,7 @@ char **tok(char *ptr)
  * simple_shell - creates a simple shell environment
  * @env: Environment to pass to execve
  *
- * Return: 0(Success) else 1 on failure
+ * Return: 0(Success)
  */
 
 int simple_shell(char **env)
@@ -57,7 +57,7 @@ int simple_shell(char **env)
 
 	while (1)
 	{
-		printf("$ ");
+		printf("($) ");
 		read = getline(&buf, &inp_len, stdin);
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
