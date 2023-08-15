@@ -61,9 +61,9 @@ int simple_shell(char **env)
 		read = getline(&buf, &inp_len, stdin);
 		if (buf[read - 1] == '\n')
 			buf[read - 1] = '\0';
-		if (strcmp(buf, "exit") == 0)
+		if (_strcmp(buf, "exit") == 0)
 			break;
-		if (strcmp(buf, "env") == 0)
+		if (_strcmp(buf, "env") == 0)
 		{
 			printenv(env);
 			continue;
@@ -77,7 +77,7 @@ int simple_shell(char **env)
 		else if (pid == 0)
 		{
 			args = tok(buf);
-			if (execvp(args[0], args) == -1)
+			if (execve(args[0], args, env) == -1)
 			{
 				perror("execve");
 				exit(EXIT_FAILURE);

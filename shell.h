@@ -11,5 +11,6 @@
 int simple_shell(char **env);
 char **tok(char *ptr);
 void printenv(char **env);
+int _strcmp(char *str1, char *str2);
 
 #endif
