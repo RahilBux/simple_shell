@@ -51,9 +51,8 @@ int simple_shell(char **env)
 	pid_t pid;
 	size_t inp_len = 0;
 	ssize_t read;
-	char *buf = NULL;
+	char *buf = NULL, **args;
 	int status;
-	char **args;
 
 	while (1)
 	{
