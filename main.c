@@ -14,6 +14,6 @@ int main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	simple_shell(env);
-
+	test
 	return (0);
 }
