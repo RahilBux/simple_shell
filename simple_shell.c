@@ -44,6 +44,11 @@ char **tok(char *ptr)
 	int argc = 0;
 
 	token = strtok(ptr, " ");
+	if (access(token, X_OK) != 0)
+	{
+		args = NULL;
+		return (args);
+	}
 	while (token != NULL)
 	{
 		args[argc] = token;
@@ -61,7 +66,7 @@ char **tok(char *ptr)
  * Return: 0(Success)
  */
 
-int simple_shell(char **env)
+void simple_shell(char **env)
 {
 	pid_t pid;
 	size_t inp_len = 0;
@@ -82,6 +87,9 @@ int simple_shell(char **env)
 			printenv(env);
 			continue;
 		}
+		args = tok(buf);
+		if (args == NULL)
+			continue;
 		pid = fork();
 		if (pid < 0)
 		{
@@ -90,7 +98,6 @@ int simple_shell(char **env)
 		}
 		else if (pid == 0)
 		{
-			args = tok(buf);
 			if (execve(args[0], args, env) == -1)
 			{
 				perror("execve");
@@ -101,5 +108,4 @@ int simple_shell(char **env)
 			wait(&status);
 	}
 	free(buf);
-	return (0);
-}test
+}
