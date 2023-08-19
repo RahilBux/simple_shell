@@ -102,4 +102,4 @@ int simple_shell(char **env)
 	}
 	free(buf);
 	return (0);
-}
+}test
