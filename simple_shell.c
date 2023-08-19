@@ -146,5 +146,4 @@ void simple_shell(char **env)
 			wait(&status);
 	}
 	free(buf);
-	rest
 }
