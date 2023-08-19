@@ -1,6 +1,40 @@
 #include "shell.h"
 
 /**
+ * pathcheck - checks if command begins with /bin/
+ * @str: string to be checked
+ *
+ * Return: updated string
+ */
+
+char *pathcheck(char *str)
+{
+	char *path = "/bin/";
+	char *copy = malloc(sizeof(char) * 100);
+	int i = 0;
+	int j = 0;
+
+	while (path[i] != '\0')
+	{
+		copy[i] = path[i];
+		i++;
+	}
+	i = _strlen(copy);
+	while (str[j] != '\0')
+	{
+		if (str[j] != path[j])
+		{
+			copy[i] = str[j];
+			i++;
+		}
+		j++;
+	}
+	copy[i] = '\0';
+
+	return (copy);
+}
+
+/**
  * printbash - prints ($) to stdout using the write function
  */
 
@@ -87,9 +121,13 @@ void simple_shell(char **env)
 			printenv(env);
 			continue;
 		}
+		buf = pathcheck(buf);
 		args = tok(buf);
 		if (args == NULL)
+		{
+			free(buf);
 			continue;
+		}
 		pid = fork();
 		if (pid < 0)
 		{
