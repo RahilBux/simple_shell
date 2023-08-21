@@ -80,8 +80,8 @@ char **tok(char *ptr)
 	token = strtok(ptr, " ");
 	if (access(token, X_OK) != 0)
 	{
-		args = NULL;
-		return (args);
+		free(args);
+		return (NULL);
 	}
 	while (token != NULL)
 	{
@@ -105,7 +105,7 @@ void simple_shell(char **env)
 	pid_t pid;
 	size_t inp_len = 0;
 	ssize_t read;
-	char *buf = NULL, **args;
+	char *buf = NULL, **args, *ptr;
 	int status;
 
 	while (1)
@@ -116,16 +116,11 @@ void simple_shell(char **env)
 			buf[read - 1] = '\0';
 		if (_strcmp(buf, "exit") == 0)
 			break;
-		if (_strcmp(buf, "env") == 0)
-		{
-			printenv(env);
-			continue;
-		}
-		buf = pathcheck(buf);
-		args = tok(buf);
+		ptr = pathcheck(buf);
+		args = tok(ptr);
 		if (args == NULL)
 		{
-			free(buf);
+			free(ptr);
 			continue;
 		}
 		pid = fork();
@@ -144,6 +139,8 @@ void simple_shell(char **env)
 		}
 		else
 			wait(&status);
+		free(args);
+		free(ptr);
 	}
 	free(buf);
 }
