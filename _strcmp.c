@@ -10,18 +10,17 @@
 
 int _strcmp(char *str1, char *str2)
 {
-	int i;
-	int cmp = 0;
-
-	for (i = 0; str1[i] != '\0'; i++)
+	while (*str1 != '\0' || *str2 != '\0') 
 	{
-		if (str1[i] != str2[i])
+		if (*str1 != *str2)
 		{
-			cmp++;
+			return (*str1 - *str2);
 		}
+		str1++;
+		str2++;
 	}
 
-	return (cmp);
+	return (0);
 }
 
 /**
