@@ -133,7 +133,6 @@ void simple_shell(char **env)
 		{
 			if (execve(args[0], args, env) == -1)
 			{
-				perror("execve");
 				exit(EXIT_FAILURE);
 			}
 		}
